@@ -12,9 +12,9 @@ public class PlayerWallJumpState : PlayerState
     {
         base.Enter();
 
-        _stateTimer = 1f;
+        stateTimer = 1f;
 
-        _player.SetVelocity(5 * -_player.FacingDir, _player.JumpVelocity);
+        player.SetVelocity(5 * -player.FacingDir, player.JumpVelocity);
     }
 
     public override void Exit()
@@ -26,10 +26,10 @@ public class PlayerWallJumpState : PlayerState
     {
         base.Update();
 
-        if (_stateTimer < 0)
-            _stateMachine.ChangeState(_player.AirState);
+        if (stateTimer < 0)
+            stateMachine.ChangeState(player.AirState);
 
-        if (_player.IsGrounded())
-            _stateMachine.ChangeState(_player.IdleState);
+        if (player.IsGrounded())
+            stateMachine.ChangeState(player.IdleState);
     }
 }

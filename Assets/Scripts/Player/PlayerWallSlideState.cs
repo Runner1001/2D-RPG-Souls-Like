@@ -24,19 +24,19 @@ public class PlayerWallSlideState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _stateMachine.ChangeState(_player.WallJumpState);
+            stateMachine.ChangeState(player.WallJumpState);
             return;
         }
 
-        if (_horizontal != 0 && _player.FacingDir != _horizontal)
-            _stateMachine.ChangeState(_player.IdleState);
+        if (horizontal != 0 && player.FacingDir != horizontal)
+            stateMachine.ChangeState(player.IdleState);
 
-        if(_vertical < 0)
-            _rb.velocity = new Vector2(0, _rb.velocity.y);
+        if(vertical < 0)
+            rb.velocity = new Vector2(0, rb.velocity.y);
         else
-            _rb.velocity = new Vector2(0, _rb.velocity.y * .7f);
+            rb.velocity = new Vector2(0, rb.velocity.y * .7f);
 
-        if (_player.IsGrounded())
-            _stateMachine.ChangeState(_player.IdleState);
+        if (player.IsGrounded())
+            stateMachine.ChangeState(player.IdleState);
     }
 }

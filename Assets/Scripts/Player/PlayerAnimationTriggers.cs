@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
-    Player _player => GetComponentInParent<Player>();
+    Player player => GetComponentInParent<Player>();
 
     private void AnimationTrigger()
     {
-        _player.AnimationTrigger();
+        player.AnimationTrigger();
     }
 }

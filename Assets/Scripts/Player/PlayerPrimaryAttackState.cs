@@ -19,17 +19,17 @@ public class PlayerPrimaryAttackState : PlayerState
         if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
             comboCounter = 0;
 
-        _player.Anim.SetInteger("AttackCounter", comboCounter);
+        player.Anim.SetInteger("AttackCounter", comboCounter);
 
         //CHOOSE ATTACK DIRECTION
-        float attackDirection = _player.FacingDir;
+        float attackDirection = player.FacingDir;
 
-        if(_horizontal != 0)
-            attackDirection = _horizontal;
+        if(horizontal != 0)
+            attackDirection = horizontal;
 
-        _player.SetVelocity(_player.AttackMovement[comboCounter].x * attackDirection, _player.AttackMovement[comboCounter].y);
+        player.SetVelocity(player.AttackMovement[comboCounter].x * attackDirection, player.AttackMovement[comboCounter].y);
 
-        _stateTimer = .1f;
+        stateTimer = .1f;
     }
 
     public override void Exit()
@@ -39,17 +39,17 @@ public class PlayerPrimaryAttackState : PlayerState
         comboCounter++;
         lastTimeAttacked = Time.time;
 
-        _player.StartCoroutine("BusyFor", .15f);
+        player.StartCoroutine("BusyFor", .15f);
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (_stateTimer < 0)
-            _player.SetZeroVelocity();
+        if (stateTimer < 0)
+            player.SetZeroVelocity();
 
-        if (_triggerCalled)
-            _stateMachine.ChangeState(_player.IdleState);
+        if (triggerCalled)
+            stateMachine.ChangeState(player.IdleState);
     }
 }

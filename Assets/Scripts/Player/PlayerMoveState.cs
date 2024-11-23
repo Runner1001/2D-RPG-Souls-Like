@@ -23,9 +23,9 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.Update();
 
-        _player.SetVelocity(_horizontal * _player.MoveSpeed, _rb.velocity.y);
+        player.SetVelocity(horizontal * player.MoveSpeed, rb.velocity.y);
 
-        if (_horizontal == 0 || _player.IsWallDetected())
-            _stateMachine.ChangeState(_player.IdleState);
+        if (horizontal == 0 || player.IsWallDetected())
+            stateMachine.ChangeState(player.IdleState);
     }
 }
