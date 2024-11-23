@@ -15,6 +15,12 @@ public class Enemy : Entity
     [SerializeField] float attackDistance;
     [SerializeField] float attackCooldown;
 
+    [Header("Stunned Info")]
+    [SerializeField] float stunnedDuration;
+    [SerializeField] Vector2 stunDirection;
+    [SerializeField] protected GameObject countedImage;
+    protected bool canBeStunned;
+
 
     public float MoveSpeed => moveSpeed;
     public float IdleTime => idleTime;
@@ -23,6 +29,8 @@ public class Enemy : Entity
     public float BattleTime => battleTime;
     public float LastTimeAttacked { get; set; }
     public EnemyStateMachine StateMachine { get; private set; }
+    public Vector2 StunDirection => stunDirection;
+    public float StunnedDuration => stunnedDuration;
 
     protected override void Awake()
     {
@@ -34,6 +42,29 @@ public class Enemy : Entity
     {
         base.Update();
         StateMachine.CurrentState.Update();
+    }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        countedImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        countedImage.SetActive(false);
+    }
+
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+
+        return false;
     }
 
     public virtual void AnimationFinishTrigger()
