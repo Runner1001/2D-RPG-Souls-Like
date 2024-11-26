@@ -16,9 +16,7 @@ public class Player : Entity
     [Header("Dash Info")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
-    [SerializeField] float dashTimer;
-
-    float dashCooldown;
+ 
     public float DashDirection { get; private set; }    
 
 
@@ -99,9 +97,7 @@ public class Player : Entity
         if (IsWallDetected())
             return;
 
-        dashCooldown -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldown < 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.Dash.CanUseSkill())
         {
             DashDirection = Input.GetAxisRaw("Horizontal");
 
@@ -109,8 +105,6 @@ public class Player : Entity
                 DashDirection = FacingDir;
 
             StateMachine.ChangeState(DashState);
-
-            dashCooldown = dashTimer;
         }
     }
 }
