@@ -19,6 +19,7 @@ public class Player : Entity
  
     public float DashDirection { get; private set; }    
 
+    public SkillManager Skill {  get; private set; }
 
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -64,6 +65,8 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
+
+        Skill = SkillManager.Instance;
 
         StateMachine.Initialize(IdleState);
     }
