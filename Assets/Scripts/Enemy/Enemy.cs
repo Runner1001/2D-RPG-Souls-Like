@@ -10,6 +10,7 @@ public class Enemy : Entity
     [SerializeField] float moveSpeed;
     [SerializeField] float idleTime;
     [SerializeField] float battleTime;
+    float defaultMoveSpeed;
 
     [Header("Attack Info")]
     [SerializeField] float attackDistance;
@@ -36,12 +37,37 @@ public class Enemy : Entity
     {
         base.Awake();
         StateMachine = new EnemyStateMachine();
+
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Update()
     {
         base.Update();
         StateMachine.CurrentState.Update();
+    }
+
+    public virtual void FreezeTime(bool timeFrozen)
+    {
+        if (timeFrozen)
+        {
+            moveSpeed = 0f;
+            Anim.speed = 0f;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            Anim.speed = 1f;
+        }
+    }
+
+    protected virtual IEnumerator FreezeTimerFor(float seconds)
+    {
+        FreezeTime(true);
+
+        yield return new WaitForSeconds(seconds);
+
+        FreezeTime(false);
     }
 
     public virtual void OpenCounterAttackWindow()

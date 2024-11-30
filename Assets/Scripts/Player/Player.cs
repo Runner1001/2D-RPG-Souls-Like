@@ -12,6 +12,7 @@ public class Player : Entity
     [Header("Move Setup")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpVelocity = 3f;
+    [SerializeField] float swordReturnImpact;
 
     [Header("Dash Info")]
     [SerializeField] float dashSpeed;
@@ -20,6 +21,7 @@ public class Player : Entity
     public float DashDirection { get; private set; }    
 
     public SkillManager Skill {  get; private set; }
+    public GameObject Sword { get; private set; }
 
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -32,6 +34,8 @@ public class Player : Entity
     
     public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
+    public PlayerAimSwordState AimSwordState { get; private set; }
+    public PlayerCatchSwordState CatchSwordState { get; private set; }
 
     public float MoveSpeed => moveSpeed;
     public float JumpVelocity => jumpVelocity;
@@ -39,6 +43,7 @@ public class Player : Entity
     public float DashDuration => dashDuration;
     public Vector2[] AttackMovement => attackMovement;
     public float CounterAttackDuration => counterAttackDuration;
+    public float SwordReturnImpact => swordReturnImpact;
     
     public bool IsBusy {  get; private set; }
 
@@ -60,6 +65,9 @@ public class Player : Entity
 
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack");
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, "CounterAttack");
+
+        AimSwordState = new PlayerAimSwordState(this, StateMachine, "AimSword");
+        CatchSwordState = new PlayerCatchSwordState(this, StateMachine, "CatchSword");
     }
 
     protected override void Start()
@@ -78,6 +86,17 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForDashInput();
+    }
+
+    public void AssignNewSword(GameObject newSword)
+    {
+        Sword = newSword;
+    }
+
+    public void CatchTheSword()
+    {
+        StateMachine.ChangeState(CatchSwordState);
+        Destroy(Sword);
     }
 
     public IEnumerator BusyFor(float seconds)

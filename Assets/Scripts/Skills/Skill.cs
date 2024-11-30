@@ -6,7 +6,13 @@ public class Skill : MonoBehaviour
 {
     [SerializeField] protected float cooldown;
 
+    protected Player player;
     protected float cooldownTimer;
+
+    protected virtual void Start()
+    {
+        player = PlayerManager.Instance.Player;
+    }
 
     protected virtual void Update()
     {
