@@ -30,7 +30,7 @@ public class EnemySkeleton : Enemy
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.U))
             StateMachine.ChangeState(StunnedState);
     }
 

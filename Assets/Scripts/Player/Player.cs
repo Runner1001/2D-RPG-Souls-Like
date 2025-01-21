@@ -36,6 +36,7 @@ public class Player : Entity
     public PlayerCounterAttackState CounterAttackState { get; private set; }
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
+    public PlayerBlackholeState BlackholeState { get; private set; }
 
     public float MoveSpeed => moveSpeed;
     public float JumpVelocity => jumpVelocity;
@@ -68,6 +69,7 @@ public class Player : Entity
 
         AimSwordState = new PlayerAimSwordState(this, StateMachine, "AimSword");
         CatchSwordState = new PlayerCatchSwordState(this, StateMachine, "CatchSword");
+        BlackholeState = new PlayerBlackholeState(this, StateMachine, "Jump");
     }
 
     protected override void Start()

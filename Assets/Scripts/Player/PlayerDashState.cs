@@ -12,7 +12,7 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
 
-        player.Skill.Clone.CreateClone(player.transform);
+        player.Skill.Clone.CreateClone(player.transform, Vector2.zero);
 
         stateTimer = player.DashDuration;
     }
